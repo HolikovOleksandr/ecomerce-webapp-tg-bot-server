@@ -15,7 +15,15 @@ bot.on("message", async (msg) => {
     await bot.sendPhoto(chatId, helloImg, {
       caption: "Welcome to secret shop!",
       reply_markup: {
-        keyboard: [[{ text: "Get started!", web_app: { url: client } }]],
+        keyboard: [
+          [{ text: "Set form data!", web_app: { url: client + "/form" } }],
+        ],
+      },
+    });
+
+    await bot.sendMessage(chatId, "Visit shop", {
+      reply_markup: {
+        inline_keyboard: [[{ text: "Do order", web_app: { url: client } }]],
       },
     });
   }

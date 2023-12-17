@@ -33,4 +33,19 @@ bot.on("message", async (msg) => {
       },
     });
   }
+
+  if (msg.web_app_data?.data) {
+    try {
+      const data = JSON.parse(msg.web_app_data?.data);
+
+      await bot.sendMessage(chatId, "Your country is " + data?.country);
+      await bot.sendMessage(chatId, "Your city is " + data?.city);
+
+      setTimeout(async () => {
+        await bot.sendMessage(chatId, "TY!");
+      }, 3500);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 });

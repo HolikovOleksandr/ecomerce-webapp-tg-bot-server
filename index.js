@@ -49,3 +49,34 @@ bot.on("message", async (msg) => {
     }
   }
 });
+
+app.post("/web-data", async (req, res) => {
+  const { queryId, products, totalProce } = req.body;
+
+  try {
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Congratulations!",
+      input_message_content: {
+        message_text: `You have successfully purchased a product for the ${totalProce}`,
+      },
+    });
+
+    return res.status(200).json({});
+  } catch (error) {
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Something went wrong!",
+      input_message_content: {
+        message_text: error,
+      },
+    });
+
+    return res.status(500).json({});
+  }
+});
+
+const PORT = 3500;
+app.listen(PORT, () => console.log(`Server started on ${PORT}`));
